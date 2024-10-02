@@ -1,7 +1,7 @@
 import fs from "fs";
-import { GUID } from "GUID";
-import { IBaseModel } from "model";
-import { IRepository } from "Repository/IRepository";
+import { GUID } from "../GUID";
+import { IBaseModel } from "../model";
+import { IRepository } from "./IRepository";
 
 const folder = "database";
 
@@ -27,10 +27,12 @@ export class FileManager<T = any> {
   }
 }
 
-export class FileRepository<T extends IBaseModel> implements IRepository<T> {
-  constructor(private fileName: string) {}
+export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepository<T> {
+  constructor(private fileName: string) {
+    this.fileManager = new FileManager<T>("./" + folder + "/" + this.fileName);
+  }
 
-  fileManager = new FileManager("./" + folder + "/" + this.fileName);
+  fileManager: FileManager<T>;
 
   get(id: string) {
     const data: T[] = this.fileManager.load();

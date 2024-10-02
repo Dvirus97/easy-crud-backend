@@ -1,9 +1,10 @@
-import { FileRepository, IRepository } from "@easy-crud-backend";
+import { FileRepository } from "./Repository/FileRepository";
+import { IRepository } from "./Repository/IRepository";
 import express, { Express } from "express";
-import { IBaseModel } from "model";
+import { IBaseModel } from "./model";
 
-export function createRouteInFile(app: Express, path: string) {
-  return new RouteCreator(app, path, new FileRepository(path));
+export function createRouteInFile(app: Express, type: string) {
+  return new RouteCreator(app, type, new FileRepository<IBaseModel>(type));
 }
 
 export class RouteCreator<T extends IBaseModel> {
