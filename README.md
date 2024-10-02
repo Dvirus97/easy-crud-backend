@@ -25,12 +25,10 @@ you can extend this class and change the logic.
 in this example the
 
 ```ts
-import { createRouteInFile, RouteCreator } from "@easy-crud-backend";
-import express from "express";
+import { createRouteInFile, RouteCreator, ExpressAppBuilder } from "@easy-crud-backend";
 
 const PORT = 3010;
-const app = express();
-app.use(express.json());
+const app = new ExpressAppBuilder().withAnyCors().withJson().build();
 
 // this is an alias to "new RouteCreator()"
 createRouteInFile(app, "person");
