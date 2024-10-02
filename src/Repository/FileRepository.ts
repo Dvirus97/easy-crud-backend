@@ -54,7 +54,7 @@ export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepos
   }
   create(data: T) {
     const db = this.getAll();
-    if (data.id == null) {
+    if (!data.id) {
       data.id = GUID.new();
     }
     data.version = 0;

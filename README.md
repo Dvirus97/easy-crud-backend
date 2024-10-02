@@ -25,7 +25,7 @@ you can extend this class and change the logic.
 in this example the
 
 ```ts
-import { createRouteInFile, RouteCreator, ExpressAppBuilder } from "@easy-crud-backend";
+import { createRouteInFile, RouteCreator, ExpressAppBuilder } from "easy-crud-backend";
 
 const PORT = 3010;
 const app = new ExpressAppBuilder().withAnyCors().withJson().build();
@@ -44,11 +44,11 @@ you can also extend this class and change the logic
 
 ```ts
 class CustomRouter extends RouteCreator<any> {
-  constructor(app: Express, type: string) {
+  constructor(type: string) {
     super(app, type, new FileRepository(type));
   }
 
-  protected getAll_get(): void {
+  protected override getAll_get(): void {
     this._router.get("/", (req, res) => {
       res.json([{ test: "this is test" }]);
     });
@@ -62,7 +62,7 @@ if you want to create a new endpoint you need to call the method in the construc
 
 ```ts
 class CustomRouter extends RouteCreator<any> {
-  constructor(app: Express, type: string) {
+  constructor(type: string) {
     super(app, type, new FileRepository(type));
     this.createMany();
   }
