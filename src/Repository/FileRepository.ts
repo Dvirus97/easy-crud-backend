@@ -3,16 +3,17 @@ import { GUID } from "../GUID";
 import { IBaseModel } from "../model";
 import { IRepository } from "./IRepository";
 
-const folder = "database";
+// const folder = "database";
 
 export class FileManager<T = any> {
-  constructor(private relativePath: string, private extension: string = ".json") {
-    const folderExists = fs.existsSync("./" + folder);
-    if (!folderExists) {
-      fs.mkdirSync("./" + folder);
-    }
-  }
+  constructor(private relativePath: string, private extension: string = ".json") {}
 
+  exists(path: string) {
+    return fs.existsSync(path);
+  }
+  makeFolder(path: string) {
+    fs.mkdirSync(path);
+  }
   load() {
     try {
       const data = fs.readFileSync(this.relativePath + this.extension, "utf8");
@@ -29,7 +30,11 @@ export class FileManager<T = any> {
 
 export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepository<T> {
   constructor(private fileName: string) {
-    this.fileManager = new FileManager<T>("./" + folder + "/" + this.fileName);
+    const folder = "./database";
+    this.fileManager = new FileManager<T>(folder + "/" + this.fileName);
+    if (!this.fileManager.exists(folder)) {
+      this.fileManager.makeFolder(folder);
+    }
   }
 
   fileManager: FileManager<T>;

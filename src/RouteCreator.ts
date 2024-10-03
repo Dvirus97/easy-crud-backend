@@ -23,13 +23,13 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected getOne_get() {
-    this._router.get("/:id", (req, res) => {
+    this._router.get("one/:id", (req, res) => {
       const data = this.repo.get(req.params.id);
       res.json(data);
     });
   }
   protected getAll_get() {
-    this._router.get("/", (req, res) => {
+    this._router.get("/all", (req, res) => {
       const data = this.repo.getAll();
       res.json(data);
     });
@@ -44,7 +44,7 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected updateOne_put() {
-    this._router.put("/:id", (req, res) => {
+    this._router.put("/one/:id", (req, res) => {
       const id = req.params.id;
       const updatedData = req.body as T;
 
@@ -58,7 +58,7 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected updateMany_put() {
-    this._router.put("/", (req, res) => {
+    this._router.put("/many", (req, res) => {
       const updates: T[] = req.body; // Array of update objects
       let count = 0;
       for (const update of updates) {
@@ -87,7 +87,7 @@ export class RouteCreator<T extends IBaseModel> {
     });
   }
   protected deleteAll_delete() {
-    this._router.delete("/", (req, res) => {
+    this._router.delete("/all", (req, res) => {
       this.repo.clear();
       res.json({ message: "All Data deleted successfully" });
     });
