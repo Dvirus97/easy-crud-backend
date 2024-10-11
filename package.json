@@ -1,9 +1,9 @@
 {
   "name": "easy-crud-backend",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "create a backend Api easy",
-  "main": "index.ts",
-  "type": "module",
+  "main": "./dist/index.js",
+  
   "scripts": {
     "start": "tsx index.ts"
   },
