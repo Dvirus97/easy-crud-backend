@@ -23,7 +23,7 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected getOne_get() {
-    this._router.get("one/:id", (req, res) => {
+    this._router.get("/one/:id", (req, res) => {
       const data = this.repo.get(req.params.id);
       res.json(data);
     });

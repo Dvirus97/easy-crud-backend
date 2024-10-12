@@ -24,7 +24,7 @@ class RouteCreator {
         app.use("/" + type, this._router);
     }
     getOne_get() {
-        this._router.get("one/:id", (req, res) => {
+        this._router.get("/one/:id", (req, res) => {
             const data = this.repo.get(req.params.id);
             res.json(data);
         });
