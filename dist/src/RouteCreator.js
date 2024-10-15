@@ -36,7 +36,7 @@ class RouteCreator {
         });
     }
     addOne_post() {
-        this._router.post("/", (req, res) => {
+        this._router.post("/one", (req, res) => {
             const newData = req.body;
             this.repo.create(newData);
             res.json({ message: "Data added successfully", id: newData.id });
@@ -74,7 +74,7 @@ class RouteCreator {
         });
     }
     deleteOne_delete() {
-        this._router.delete("/:id", (req, res) => {
+        this._router.delete("/one/:id", (req, res) => {
             const id = req.params.id;
             const success = this.repo.delete(id);
             if (success) {
