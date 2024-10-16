@@ -1,8 +1,12 @@
 {
   "name": "easy-crud-backend",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "create a backend Api easy",
   "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dvirus97/easy-crud-backend.git"
+  },
   "scripts": {
     "start": "tsx index.ts"
   },
