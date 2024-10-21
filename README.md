@@ -9,15 +9,15 @@ The package build on express.
 use RouteCreator class to create new Route.
 
 etch route contain few endpoints
-| route | method|
-| ------------------ | ------------------- |
-| get/one/id | getOne_get(); |
-| get/all | getAll_get(); |
-| post | addOne_post(); |
-| put/one/id | updateOne_put(); |
-| put/many | updateMany_put(); |
-| delete/id | deleteOne_delete(); |
-| delete/all | deleteAll_delete(); |
+|method| route | function |
+|-| ------------------ | ------------------- |
+| get | /one/id | getOne_get() |
+| get | /all | getAll_get() |
+| post | /one | addOne_post() |
+| put | /one/id | updateOne_put() |
+| put | /many | updateMany_put() |
+| delete | /one/id | deleteOne_delete() |
+| delete | /all | deleteAll_delete() |
 
 you can extend this class and change the logic.
 
@@ -54,7 +54,7 @@ class CustomRouter extends RouteCreator<any> {
   }
 
   protected override getAll_get(): void {
-    this._router.get("/", (req, res) => {
+    this.router.get("/", (req, res) => {
       res.json([{ test: "this is test" }]);
     });
   }
@@ -73,7 +73,7 @@ class CustomRouter extends RouteCreator<any> {
   }
 
   createMany() {
-    this._router.post("/many", (req, res) => {
+    this.router.post("/many", (req, res) => {
       // logic...
     });
   }
@@ -97,7 +97,7 @@ export type IBaseModel = {
 ```
 
 all entities must have an `id` and a `type` property.
-in the FileRepository i tack care of the `version` property. each time an entity is changed, the `version` is incremented
+in the FileRepository i take care of the `version` property. each time an entity is changed, the `version` is incremented
 
 ---
 

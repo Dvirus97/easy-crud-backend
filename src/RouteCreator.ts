@@ -3,12 +3,8 @@ import { IRepository } from "./Repository/IRepository";
 import express, { Express } from "express";
 import { IBaseModel } from "./model";
 
-export function createRouteInFile(app: Express, type: string) {
-  return new RouteCreator(app, type, new FileRepository<IBaseModel>(type));
-}
-
 export class RouteCreator<T extends IBaseModel> {
-  protected _router = express.Router();
+  protected router = express.Router();
 
   constructor(app: Express, type: string, private repo: IRepository<T>) {
     this.getOne_get();
@@ -19,36 +15,36 @@ export class RouteCreator<T extends IBaseModel> {
     this.deleteOne_delete();
     this.deleteAll_delete();
 
-    app.use("/" + type, this._router);
+    app.use("/" + type, this.router);
   }
 
   protected getOne_get() {
-    this._router.get("/one/:id", (req, res) => {
-      const data = this.repo.get(req.params.id);
+    this.router.get("/one/:id", async (req, res) => {
+      const data = await this.repo.get(req.params.id);
       res.json(data);
     });
   }
   protected getAll_get() {
-    this._router.get("/all", (req, res) => {
-      const data = this.repo.getAll();
+    this.router.get("/all", async (req, res) => {
+      const data = await this.repo.getAll();
       res.json(data);
     });
   }
 
   protected addOne_post() {
-    this._router.post("/one", (req, res) => {
+    this.router.post("/one", async (req, res) => {
       const newData = req.body as T;
-      this.repo.create(newData);
+      await this.repo.create(newData);
       res.json({ message: "Data added successfully", id: newData.id });
     });
   }
 
   protected updateOne_put() {
-    this._router.put("/one/:id", (req, res) => {
+    this.router.put("/one/:id", async (req, res) => {
       const id = req.params.id;
       const updatedData = req.body as T;
 
-      const success = this.repo.update({ ...updatedData, id });
+      const success = await this.repo.update({ ...updatedData, id });
       if (success) {
         res.json({ message: "Data updated successfully", id });
       } else {
@@ -58,11 +54,11 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected updateMany_put() {
-    this._router.put("/many", (req, res) => {
+    this.router.put("/many", async (req, res) => {
       const updates: T[] = req.body; // Array of update objects
       let count = 0;
       for (const update of updates) {
-        const success = this.repo.update(update);
+        const success = await this.repo.update(update);
         if (success) {
           count++;
         }
@@ -76,9 +72,9 @@ export class RouteCreator<T extends IBaseModel> {
   }
 
   protected deleteOne_delete() {
-    this._router.delete("/one/:id", (req, res) => {
+    this.router.delete("/one/:id", async (req, res) => {
       const id = req.params.id;
-      const success = this.repo.delete(id);
+      const success = await this.repo.delete(id);
       if (success) {
         res.json({ message: "Data deleted successfully" });
       } else {
@@ -87,8 +83,8 @@ export class RouteCreator<T extends IBaseModel> {
     });
   }
   protected deleteAll_delete() {
-    this._router.delete("/all", (req, res) => {
-      this.repo.clear();
+    this.router.delete("/all", async (req, res) => {
+      await this.repo.clear();
       res.json({ message: "All Data deleted successfully" });
     });
   }

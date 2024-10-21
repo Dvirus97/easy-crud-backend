@@ -29,9 +29,9 @@ export class FileManager<T = any> {
 }
 
 export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepository<T> {
-  constructor(private fileName: string) {
+  constructor(fileName: string) {
     const folder = "./database";
-    this.fileManager = new FileManager<T>(folder + "/" + this.fileName);
+    this.fileManager = new FileManager<T>(folder + "/" + fileName);
     if (!this.fileManager.exists(folder)) {
       this.fileManager.makeFolder(folder);
     }
@@ -39,15 +39,15 @@ export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepos
 
   fileManager: FileManager<T>;
 
-  get(id: string) {
-    const data: T[] = this.fileManager.load();
+  async get(id: string) {
+    const data: T[] = await this.getAll();
     return data.find((x) => x.id == id);
   }
-  getAll() {
+  async getAll() {
     return this.fileManager.load() as T[];
   }
-  update(data: T) {
-    const db = this.getAll();
+  async update(data: T) {
+    const db = await this.getAll();
     const index = db.findIndex((x) => x.id == data.id);
     if (index == -1) {
       return false;
@@ -57,18 +57,16 @@ export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepos
     this.fileManager.save(db);
     return true;
   }
-  create(data: T) {
-    const db = this.getAll();
-    if (!data.id) {
-      data.id = GUID.new();
-    }
-    data.version = 0;
+  async create(data: T) {
+    const db = await this.getAll();
+    data.id ??= GUID.new();
+    data.version ??= 0;
     db.push(data);
     this.fileManager.save(db);
     return true;
   }
-  delete(id: string) {
-    const db = this.getAll();
+  async delete(id: string) {
+    const db = await this.getAll();
     const index = db.findIndex((x) => x.id == id);
     if (index == -1) {
       return false;
@@ -77,7 +75,7 @@ export class FileRepository<T extends IBaseModel = IBaseModel> implements IRepos
     this.fileManager.save(db);
     return true;
   }
-  clear() {
+  async clear() {
     this.fileManager.save([]);
   }
 }

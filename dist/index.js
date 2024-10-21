@@ -17,6 +17,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./src/RouteCreator"), exports);
 __exportStar(require("./src/Repository/IRepository"), exports);
 __exportStar(require("./src/Repository/FileRepository"), exports);
+__exportStar(require("./src/Repository/mongoRepository"), exports);
 __exportStar(require("./src/GUID"), exports);
 __exportStar(require("./src/model"), exports);
 __exportStar(require("./src/ExpressAppBuilder"), exports);
+__exportStar(require("./src/createFunction"), exports);

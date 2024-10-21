@@ -1,8 +1,8 @@
 export interface IRepository<T> {
-  get: (id: string) => T | undefined;
-  getAll: () => T[];
-  update: (data: T) => boolean;
-  create: (data: T) => boolean;
-  delete: (id: string) => boolean;
+  get: (id: string) => Promise<T | undefined>;
+  getAll: () => Promise<T[]>;
+  update: (data: T) => Promise<boolean>;
+  create: (data: T) => Promise<boolean>;
+  delete: (id: string) => Promise<boolean>;
   clear: () => void;
 }
