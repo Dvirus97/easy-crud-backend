@@ -39,7 +39,6 @@ class MongoModel {
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("getAll");
             return (yield this.model.find());
         });
     }
@@ -66,8 +65,6 @@ class MongoModel {
             (_a = data.type) !== null && _a !== void 0 ? _a : (data.type = this.type);
             (_b = data.version) !== null && _b !== void 0 ? _b : (data.version = 0);
             (_c = data.id) !== null && _c !== void 0 ? _c : (data.id = GUID_1.GUID.new());
-            // (data as any)._id = data.id;
-            console.log(data);
             try {
                 yield this.model.create(data);
                 return true;

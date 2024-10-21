@@ -11,32 +11,35 @@ use RouteCreator class to create new Route.
 etch route contain few endpoints
 |method| route | function |
 |-| ------------------ | ------------------- |
-| get | /one/id | getOne_get() |
+| get | /one/:id | getOne_get() |
 | get | /all | getAll_get() |
 | post | /one | addOne_post() |
-| put | /one/id | updateOne_put() |
+| put | /one/:id | updateOne_put() |
 | put | /many | updateMany_put() |
-| delete | /one/id | deleteOne_delete() |
+| delete | /one/:id | deleteOne_delete() |
 | delete | /all | deleteAll_delete() |
-
-you can extend this class and change the logic.
 
 ### example to simple usage
 
 ```ts
-import { createRouteInFile, RouteCreator, ExpressAppBuilder } from "easy-crud-backend";
+import { RouteCreator, FileRepository } from "easy-crud-backend";
+import express from "express";
 
 const PORT = 3010;
 const app = express();
 
-// this is an alias to "new RouteCreator()"
-createRouteInFile(app, "person");
-// this is the explicit way
 new RouteCreator(app, "car", new FileRepository("car"));
 
 app.listen(PORT, () => {
   console.log("listening on http://localhost:" + PORT);
 });
+```
+
+with mongoDb
+
+```ts
+const db = new MongoDbFactory("mongodb://localhost:27017/myDb_test1");
+new RouteCreator(app, "person", db.createCollection("person"));
 ```
 
 Use `ExpressAppBuilder` class for easy settings
@@ -45,7 +48,26 @@ Use `ExpressAppBuilder` class for easy settings
 const app = new ExpressAppBuilder().withAnyCors().withJson().withStatic("/public").build();
 ```
 
-you can also extend this class and change the logic
+use fast creational functions instead of `RouteCreator`
+
+```ts
+// example 1
+chooseRepository("mongoDb", { connectionString: "mongodb://localhost:27017/myDb_test1" });
+createRoute(app, "person");
+
+// example 2
+chooseRepository("files");
+createRoute(app, "person");
+
+// example 3
+createRouteInFile(app, "person");
+
+// example 4
+const connectionString = "mongodb://localhost:27017/myDb";
+createRouteInMongoDb(app, "person", connectionString);
+```
+
+you can also extend `RouteCreator` class and change the logic
 
 ```ts
 class CustomRouter extends RouteCreator<any> {

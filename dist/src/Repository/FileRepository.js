@@ -78,9 +78,6 @@ class FileRepository {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const db = yield this.getAll();
-            // if (!data.id) {
-            //   data.id = GUID.new();
-            // }
             (_a = data.id) !== null && _a !== void 0 ? _a : (data.id = GUID_1.GUID.new());
             (_b = data.version) !== null && _b !== void 0 ? _b : (data.version = 0);
             db.push(data);
