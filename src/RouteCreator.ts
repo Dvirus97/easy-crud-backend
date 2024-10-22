@@ -1,7 +1,6 @@
-import { FileRepository } from "./Repository/FileRepository";
-import { IRepository } from "./Repository/IRepository";
 import express, { Express } from "express";
 import { IBaseModel } from "./model";
+import { IRepository } from "./Repository/IRepository";
 
 export class RouteCreator<T extends IBaseModel> {
   protected router = express.Router();

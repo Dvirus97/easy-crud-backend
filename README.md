@@ -1,7 +1,5 @@
 # easy-crud-backend
 
-> https://github.com/Dvirus97/easy-crud-backend
-
 This package help create fast basic curd api.
 
 The package build on express.

@@ -1,4 +1,4 @@
-import { IBaseModel } from "src/model";
+import { IBaseModel } from "../model";
 import { IRepository } from "./IRepository";
 import mongoose, { HydratedDocument, InferSchemaType, Model, ObtainSchemaGeneric } from "mongoose";
 import { GUID } from "../GUID";
